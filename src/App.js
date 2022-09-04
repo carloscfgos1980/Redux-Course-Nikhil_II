@@ -5,6 +5,9 @@ import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 
 function App() {
+  const cartItems = useSelector((state) => state.cart.itemsList);
+  console.log(cartItems);
+
   const isLoggIn = useSelector((state) => state.auth.isLoggIn);
   console.log(isLoggIn)
   return (
