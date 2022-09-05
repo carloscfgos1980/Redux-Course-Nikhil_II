@@ -20,14 +20,15 @@ const cartSlice = createSlice({
                     name: newItem.name,
                     id: newItem.id,
                     quantity: 1,
-                    totalPrice: newItem.price
+                    totalPrice: newItem.price,
+                    price: newItem.price
                 });
                 state.totalQuantity++; // increase the total quantity
             }
         },
         removeFromCart(state, action) { },
         setShowCart(state) {
-            state.showCart = true;
+            state.showCart = !state.showCart; // allows to swith from true to false everytime we call this function. USeful to show the info in the DOM
         }
     }
 });
