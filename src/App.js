@@ -6,7 +6,7 @@ import "./App.css";
 import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 import Notifications from "./components/Notificatons";
-import { sendCartData } from "./store/cart-actions";
+import { fetchData, sendCartData } from "./store/cart-actions";
 import { uiActions } from "./store/ui-slice";
 let isFirstRender = true;
 
@@ -17,12 +17,20 @@ function App() {
   const isLoggIn = useSelector((state) => state.auth.isLoggIn);
 
   // useEffect for fetching an API
+
+  useEffect(() => {
+    dispatch(fetchData())
+  }, [dispatch])
+
   useEffect(() => {
     if (isFirstRender) {
       isFirstRender = false;
       return
     }
-    dispatch(sendCartData(cart));
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
+
   }, [cart, dispatch])
   return (
     <div className="App">
