@@ -6,6 +6,7 @@ import "./App.css";
 import Auth from "./components/Auth";
 import Layout from "./components/Layout";
 import Notifications from "./components/Notificatons";
+import { sendCartData } from "./store/cart-actions";
 import { uiActions } from "./store/ui-slice";
 let isFirstRender = true;
 
@@ -21,37 +22,8 @@ function App() {
       isFirstRender = false;
       return
     }
-    // Send State as Sending request
-    dispatch(uiActions.showNotifications({
-      open: true,
-      message: "Sending request",
-      type: 'warning'
-    }))
-    const sendRequest = async () => {
-      const res = await fetch('https://redux-http-aa16a-default-rtdb.firebaseio.com/cartItems.json', // Given name to the collection we are going to create
-        {
-          method: "PUT",
-          body: JSON.stringify(cart),
-        }
-      );
-      const data = await res.json();
-      // Send ste as the Request is sucessful
-      dispatch(uiActions.showNotifications({
-        open: true,
-        message: "Send request to Data Base successfully",
-        type: 'success'
-      }))
-    }
-    sendRequest().catch(err => {
-      //Send state as error
-      dispatch(uiActions.showNotifications({
-        open: true,
-        message: "Sending request Failed",
-        type: 'error'
-      }))
-
-    })
-  }, [cart])
+    dispatch(sendCartData(cart));
+  }, [cart, dispatch])
   return (
     <div className="App">
       {notification && <Notifications type={notification.type} message={notification.message} />}
